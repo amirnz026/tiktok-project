@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 import axios from "axios";
 import useAuthStore from "../store/authStore";
 // import { client } from "../utils/client.ts"; arvanclient
+import tusUpload from "../utils/tus";
 
 const Upload = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +15,7 @@ const Upload = () => {
     const selectedFile = e.target.files[0];
     const fileTypes = ["video/mp4", "video/webm", "video/ogg"];
     if (fileTypes.includes(selectedFile.type)) {
-      // upload selectedFile to ac.then((data) => { setVideoAsset(data) setIsLoading(false)})
+      await tusUpload(selectedFile);
     } else {
       setIsLoading(false);
       setWrongFileType(true);
@@ -36,7 +37,14 @@ const Upload = () => {
             ) : (
               <div>
                 {videoAsset ? (
-                  <div></div>
+                  <div>
+                    <video
+                      src={"lir"}
+                      loop
+                      controls
+                      className="rounded-xl h-[450px] mt-16 bg-black"
+                    ></video>
+                  </div>
                 ) : (
                   <label className="cursor-pointer">
                     <div className="flex flex-col items-center justify-center h-full">
@@ -57,7 +65,7 @@ const Upload = () => {
                     <input
                       type="file"
                       name="upload-video"
-                      onChange={uploadVideo}
+                      onChange={(e) => uploadVideo(e)}
                       className="w-0 h-0"
                     />
                   </label>

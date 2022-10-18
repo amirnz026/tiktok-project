@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 import axios from "axios";
 import useAuthStore from "../store/authStore";
 // import { client } from "../utils/client.ts"; arvanclient
+import { upload } from "../utils/tus";
 
 const Upload = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +15,9 @@ const Upload = () => {
     const selectedFile = e.target.files[0];
     const fileTypes = ["video/mp4", "video/webm", "video/ogg"];
     if (fileTypes.includes(selectedFile.type)) {
+      console.log("upload started");
+      upload(selectedFile);
+      console.log("uploaded finished");
       // upload selectedFile to ac.then((data) => { setVideoAsset(data) setIsLoading(false)})
     } else {
       setIsLoading(false);
